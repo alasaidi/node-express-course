@@ -1,12 +1,10 @@
-const { readFileSync, writeFileSync } = require('fs')
-console.log('start')
-const first = readFileSync('./content/first.txt', 'utf8')
-const second = readFileSync('./content/second.txt', 'utf8')
-
-writeFileSync(
-  './content/result-sync.txt',
-  `Here is the result : ${first}, ${second}`,
-  { flag: 'a' }
-)
-console.log('done with this task')
-console.log('starting the next one')
+const { readFileSync, writeFileSync } = require("fs");
+const path = require("path");
+// this is the same as that we declare the variable fs and then we call fs.readfilesync and fs.writefilesync
+const firstPath = path.resolve(__dirname, "content", "first.txt");
+console.log(firstPath);
+const secondPath = path.resolve(__dirname, "content", "result-sync.txt");
+console.log(secondPath);
+const first = readFileSync(firstPath, "utf8");
+console.log(first);
+writeFileSync(secondPath, `Here goes the content of the first txt file:${first}`, { flag: "a" });
