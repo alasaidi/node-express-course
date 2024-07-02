@@ -12,11 +12,15 @@ readFile("./content/first.txt", "utf8", (err, data) => {
     }
     const second = data;
     console.log(second);
-    writeFile("./content/result-async.txt", `here is the result :${first} & ${second} `, (err, data) => {
-      if (err) {
-        console.log(err);
-      }
-      console.log("done with this task");
-    });
+    writeFile(
+      "./content/result-async.txt",
+      `here is the result :${first} & ${second} `,
+      (err, data) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log("done with this task");
+      },
+    );
   });
 });

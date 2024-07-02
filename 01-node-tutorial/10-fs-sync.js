@@ -7,4 +7,8 @@ const secondPath = path.resolve(__dirname, "content", "result-sync.txt");
 console.log(secondPath);
 const first = readFileSync(firstPath, "utf8");
 console.log(first);
-writeFileSync(secondPath, `Here goes the content of the first txt file:${first}`, { flag: "a" });
+writeFileSync(
+  secondPath,
+  `Here goes the content of the first txt file:${first}`,
+  { flag: "a" },
+);
