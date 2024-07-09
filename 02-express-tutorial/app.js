@@ -39,8 +39,14 @@ const index = path.resolve(__dirname, "./navbar-app/index.html");
 
 app.use(express.static("./public"));
 
+const { products } = require("./data");
+
 app.get("/", (req, res) => {
   res.sendFile(index);
+});
+
+app.get("/json", (req, res) => {
+  res.json(products);
 });
 
 app.get("/about", (req, res) => {
