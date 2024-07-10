@@ -49,6 +49,23 @@ app.get("/json", (req, res) => {
   res.json(products);
 });
 
+app.get("/api/products", (req, res) => {
+  const newProducts = products.map((products) => {
+    const { id, name, image } = products;
+    return { id, name, image };
+  });
+  console.log(newProducts);
+  res.json(newProducts);
+});
+
+app.get("/api/products/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  const product = products.find((product) => product.id == id);
+
+  res.json(product);
+});
+
 app.get("/about", (req, res) => {
   console.log("about page ");
   res.send("about page ");
