@@ -40,6 +40,7 @@ const index = path.resolve(__dirname, "./navbar-app/index.html");
 app.use(express.static("./public"));
 
 const { products } = require("./data");
+const { existsSync } = require("fs");
 
 app.get("/", (req, res) => {
   res.sendFile(index);
@@ -62,7 +63,9 @@ app.get("/api/products/:id", (req, res) => {
   const id = req.params.id;
   console.log(id);
   const product = products.find((product) => product.id == id);
-
+  if (!product) {
+    res.status("404").send("404 product not found");
+  }
   res.json(product);
 });
 
