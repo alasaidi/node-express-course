@@ -69,6 +69,39 @@ app.get("/api/products/:id", (req, res) => {
   res.json(product);
 });
 
+app.get("/api/products/:id/reviews/:reviews", (req, res) => {
+  const reviews = req.params.reviews;
+
+  const values = products.find((items) => {
+    return items.reviews == reviews;
+  });
+  console.log(values);
+  if (!values) {
+    res.status("404").send("404 product not found");
+  }
+  res.send(values);
+});
+
+app.get("/api/v1/query", (req, res) => {
+  // const query = req.query;
+  // console.log(query);
+  // res.send("hello world");
+  const { search, limit } = req.query;
+  let sortedValue = [...products];
+  if (search) {
+    sortedValue = sortedValue.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
+  }
+  if (limit) {
+    sortedValue = sortedValue.slice(0, Number(limit));
+  }
+  if (sortedValue.length < 1) {
+    // res.status(200).send("<h1>no product match your search</h1>");
+    // the return is for "Cannot set headers after they are sent to the client"
+    return res.status(200).json({ success: true, data: [] });
+  }
+  res.json(sortedValue);
+});
+
 app.get("/about", (req, res) => {
   console.log("about page ");
   res.send("about page ");
