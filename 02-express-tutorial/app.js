@@ -118,29 +118,59 @@
 
 //-----------------------------------------------------------------------------------------------//
 //middeware
+// import express from "express";
+// import morgan from "morgan";
+// const app = express();
+
+// import logger from "./logger.js";
+// import authorize from "./authorized.js";
+
+// // any path after the api will receive the logger
+// // app.use("/api", logger);
+// app.use(morgan("tiny"));
+// // app.use(authorize, logger);
+// app.get("/", (req, res) => {
+//   res.send("home page");
+// });
+
+// app.get("/api", (req, res) => {
+//   res.send("about page");
+// });
+
+// app.get("/shop", (req, res) => {
+//   res.send("home page");
+// });
+
+// app.get("/api/items", [authorize, logger], (req, res) => {
+//   res.send("about page");
+// });
+// app.listen(5000, () => {
+//   console.log("server is running on port 5000");
+// });
+
+//-----------------------------------------------------------------------------------------------//
+//HTTP Method
 import express from "express";
-
 const app = express();
-import logger from "./logger.js";
-import authorize from "./authorized.js";
-// any path after the api will receive the logger
-// app.use("/api", logger);
 
-app.use(authorize, logger);
-app.get("/", (req, res) => {
-  res.send("home page");
+import data from "./data.js";
+const { people } = data;
+app.use(express.static("./methods-public"));
+app.use(express.urlencoded({ extended: false }));
+
+app.get("/api/users", (req, res) => {
+  res.status(200).json({ success: true, data: people });
 });
 
-app.get("/api", (req, res) => {
-  res.send("about page");
-});
+app.post("/login", (req, res) => {
+  const { name } = req.body;
+  console.log(name);
+  if (name) {
+    return res.status(200).send("welcome");
+  }
+  res.status(401).send("please provide a name");
 
-app.get("/shop", (req, res) => {
-  res.send("home page");
-});
-
-app.get("/api/items", (req, res) => {
-  res.send("about page");
+  res.send("post");
 });
 app.listen(5000, () => {
   console.log("server is running on port 5000");

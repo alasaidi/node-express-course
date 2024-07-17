@@ -1,6 +1,7 @@
 {
   "name": "2-express-tutorial",
   "version": "1.0.0",
+  "types": "module",
   "description": "",
   "type": "module",
   "main": "app.js",
@@ -11,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
