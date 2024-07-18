@@ -157,21 +157,46 @@ import data from "./data.js";
 const { people } = data;
 app.use(express.static("./methods-public"));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.get("/api/users", (req, res) => {
   res.status(200).json({ success: true, data: people });
 });
 
+app.post("/api/users", (req, res) => {
+  const { name } = req.body;
+  if (name) {
+    res.status(201).json({ success: true, person: name });
+  } else {
+    res.status(400).json({ success: false, msg: "Please provide name" });
+  }
+});
+
+app.put("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  const person = people.find((person) => person.id === Number(id));
+  if (!person) {
+    res.status(400).json({ success: false, msg: "there is no person with this id " });
+  }
+  const newPerson = people.map((person) => {
+    if (person.id === Number(id)) {
+      person.name = name;
+    }
+    return person;
+  });
+  res.status(200).json({ success: true, data: newPerson });
+});
 app.post("/login", (req, res) => {
   const { name } = req.body;
   console.log(name);
   if (name) {
     return res.status(200).send("welcome");
+  } else {
+    res.status(401).send("please provide a name");
   }
-  res.status(401).send("please provide a name");
-
-  res.send("post");
 });
+
 app.listen(5000, () => {
   console.log("server is running on port 5000");
 });
