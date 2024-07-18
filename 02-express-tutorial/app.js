@@ -187,6 +187,17 @@ app.put("/api/users/:id", (req, res) => {
   });
   res.status(200).json({ success: true, data: newPerson });
 });
+
+app.delete("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const person = people.find((person) => person.id === Number(id));
+  if (!person) {
+    res.status(400).json({ success: false, msg: "Please provide id" });
+  }
+  const newPerson = people.filter((person) => person.id !== Number(id));
+  res.status(200).json({ success: true, data: newPerson });
+});
+
 app.post("/login", (req, res) => {
   const { name } = req.body;
   console.log(name);
